@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {Card, Form, Button} from "react-bootstrap";
 import useFormHook from "../hooks/useFormHook";
 import { Message } from "./response/Message";
 import axios from "axios"
+import ReCAPTCHA from "react-google-recaptcha";
 
 export const InquiryForm = () => {
     const [formValue, handleChange, handleReset] = useFormHook({
@@ -10,24 +11,31 @@ export const InquiryForm = () => {
         email: "",
         message: ""
     })
+    const recaptchaRef = useRef();
     const [subscription, setSubscription] = useState(false)
     const [error, setError] = useState(false)
     const [success, setSuccess] = useState(false)
     const [errMessage, setErrMessage] = useState("")
     const [successMessage, setSuccessMessage] = useState("")
+    const [captcha, setCaptcha] = useState("")
     const handleSubscription = (e) => {
         setSubscription(e.target.checked)
+    }
+    const onChangeRecaptcha = (value) => {
+        setCaptcha(value)
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
         const data = JSON.parse(JSON.stringify(formValue))
         data.subscription = subscription
+        data.captcha = captcha
         try {
             const response = await axios.post("http://localhost:5000/v1/inquiry", data)
             setSuccessMessage(response.data.Message)
             setError(false)
             setSuccess(true)
             handleReset()
+            recaptchaRef.current.reset()
             setSubscription(false)
         } catch (e) {
             setError(true)
@@ -65,7 +73,12 @@ export const InquiryForm = () => {
                             <Form.Check type="checkbox" label="Subscribe to Tasty Treats"
                                         onChange={handleSubscription} name="subscription" checked={subscription}/>
                         </Form.Group>
-                        <Button variant="primary" type="submit">
+                        <ReCAPTCHA
+                            ref={recaptchaRef}
+                            sitekey="6Ldt_oIaAAAAAKmX_4H_IiwR26tRaPJmzhGlKXom"
+                            onChange={onChangeRecaptcha}
+                        />
+                        <Button variant="primary" type="submit" className="mt-3">
                             Submit
                         </Button>
                     </Form>
