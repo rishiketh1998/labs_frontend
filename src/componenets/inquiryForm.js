@@ -62,6 +62,7 @@ export const InquiryForm = () => {
         } catch (e) {
             setError(true)
             setSuccess(false)
+            recaptchaRef.current.reset()
             setErrMessage(e.response.data.Error)
         }
     }
