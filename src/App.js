@@ -1,13 +1,13 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Header } from './componenets/navbar/header.js'
-import { HeaderImg } from "./componenets/navbar/harderImg";
+import { InquiryForm } from "./componenets/inquiryForm";
 
 function App() {
   return (
     <div className="App">
       <Header />
-      <HeaderImg />
+      <InquiryForm />
     </div>
   );
 }
