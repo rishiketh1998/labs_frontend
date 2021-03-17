@@ -1,8 +1,7 @@
 import React, {useState} from "react";
 import {Card, Form, Button} from "react-bootstrap";
 import useFormHook from "../hooks/useFormHook";
-import { Success } from "./response/success";
-import { Error } from "./response/error";
+import { Message } from "./response/Message";
 import axios from "axios"
 
 export const InquiryForm = () => {
@@ -38,8 +37,8 @@ export const InquiryForm = () => {
     }
     return (
         <div className="container my-5">
-            {error && <Error message={errMessage}/>}
-            {success && <Success message={successMessage} />}
+            {error && <Message message={errMessage} variant="danger" type="Error"/>}
+            {success && <Message message={successMessage} variant="success" type="Success" />}
             <Card>
                 <Card.Header className="lead" style={{fontFamily: "cursive"}}>Inquiry Form</Card.Header>
                 <Card.Body>
