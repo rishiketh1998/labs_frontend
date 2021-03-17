@@ -7,7 +7,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-
+.header-img {
+  background-image: url("https://png.pngtree.com/thumb_back/fw800/back_our/20190621/ourmid/pngtree-vector-candy-halloween-banner-image_175029.jpg");
+  height: 400px;
+  width: 100%;
+  background-repeat: no-repeat;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
