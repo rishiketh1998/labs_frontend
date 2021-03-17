@@ -1,10 +1,11 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Header } from './componenets/header.js'
 
 function App() {
   return (
     <div className="App">
-      <h1 className="display-2">Apption Labs</h1>
+      <Header />
     </div>
   );
 }
