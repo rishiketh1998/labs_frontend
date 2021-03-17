@@ -2,6 +2,13 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import {Navbar, Nav, Container} from "react-bootstrap";
 
+/**
+ * @author Rishi
+ * @description: component that displays links for users to navigate.
+ * Allows users to navigate to Inquiry form and Inquiries page
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export const Header = () => {
     return (
         <>

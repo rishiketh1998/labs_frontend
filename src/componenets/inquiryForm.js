@@ -5,6 +5,12 @@ import { Message } from "./response/Message";
 import axios from "axios"
 import ReCAPTCHA from "react-google-recaptcha";
 
+/**
+ * @author Rishi
+ * @description: component that allows users to enter their inquiry
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export const InquiryForm = () => {
     const [formValue, handleChange, handleReset] = useFormHook({
         name: "",
@@ -18,12 +24,28 @@ export const InquiryForm = () => {
     const [errMessage, setErrMessage] = useState("")
     const [successMessage, setSuccessMessage] = useState("")
     const [captcha, setCaptcha] = useState("")
+    /**
+     * @author Rishi
+     * @description: handles the input change of subscription
+     * @param e
+     */
     const handleSubscription = (e) => {
         setSubscription(e.target.checked)
     }
+    /**
+     * @author Rishi
+     * @description: sets the recaptcha value to the state
+     * @param value
+     */
     const onChangeRecaptcha = (value) => {
         setCaptcha(value)
     }
+    /**
+     * @author Rishi
+     * @description: an ajax call is made to the server to store inquiry, all errors are handled here
+     * @param e
+     * @returns {Promise<void>}
+     */
     const handleSubmit = async (e) => {
         e.preventDefault()
         const data = JSON.parse(JSON.stringify(formValue))
