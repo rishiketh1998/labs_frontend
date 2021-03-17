@@ -1,33 +1,63 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {Card, Form, Button} from "react-bootstrap";
 import useFormHook from "../hooks/useFormHook";
 import { Message } from "./response/Message";
 import axios from "axios"
+import ReCAPTCHA from "react-google-recaptcha";
 
+/**
+ * @author Rishi
+ * @description: component that allows users to enter their inquiry
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export const InquiryForm = () => {
     const [formValue, handleChange, handleReset] = useFormHook({
         name: "",
         email: "",
         message: ""
     })
+    const recaptchaRef = useRef();
     const [subscription, setSubscription] = useState(false)
     const [error, setError] = useState(false)
     const [success, setSuccess] = useState(false)
     const [errMessage, setErrMessage] = useState("")
     const [successMessage, setSuccessMessage] = useState("")
+    const [captcha, setCaptcha] = useState("")
+    /**
+     * @author Rishi
+     * @description: handles the input change of subscription
+     * @param e
+     */
     const handleSubscription = (e) => {
         setSubscription(e.target.checked)
     }
+    /**
+     * @author Rishi
+     * @description: sets the recaptcha value to the state
+     * @param value
+     */
+    const onChangeRecaptcha = (value) => {
+        setCaptcha(value)
+    }
+    /**
+     * @author Rishi
+     * @description: an ajax call is made to the server to store inquiry, all errors are handled here
+     * @param e
+     * @returns {Promise<void>}
+     */
     const handleSubmit = async (e) => {
         e.preventDefault()
         const data = JSON.parse(JSON.stringify(formValue))
         data.subscription = subscription
+        data.captcha = captcha
         try {
             const response = await axios.post("http://localhost:5000/v1/inquiry", data)
             setSuccessMessage(response.data.Message)
             setError(false)
             setSuccess(true)
             handleReset()
+            recaptchaRef.current.reset()
             setSubscription(false)
         } catch (e) {
             setError(true)
@@ -65,7 +95,12 @@ export const InquiryForm = () => {
                             <Form.Check type="checkbox" label="Subscribe to Tasty Treats"
                                         onChange={handleSubscription} name="subscription" checked={subscription}/>
                         </Form.Group>
-                        <Button variant="primary" type="submit">
+                        <ReCAPTCHA
+                            ref={recaptchaRef}
+                            sitekey="6Ldt_oIaAAAAAKmX_4H_IiwR26tRaPJmzhGlKXom"
+                            onChange={onChangeRecaptcha}
+                        />
+                        <Button variant="primary" type="submit" className="mt-3">
                             Submit
                         </Button>
                     </Form>

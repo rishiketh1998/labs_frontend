@@ -5,7 +5,13 @@ import { InquiryForm } from "./componenets/inquiryForm";
 import { Switch, Route } from "react-router-dom";
 import {Inquiries } from "./componenets/inquires";
 
-function App() {
+/**
+ * @author Rishi
+ * @description: Main component that calls all the other components
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const App = () => {
   return (
     <div className="App">
       <Header />

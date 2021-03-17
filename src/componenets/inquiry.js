@@ -1,6 +1,13 @@
 import React from "react";
 import {Card} from "react-bootstrap";
 
+/**
+ * @author Rishi
+ * @description: component displays individual inquiry details in a card
+ * @param inquiry
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export const Inquiry = ({inquiry}) => {
     return (
         <Card className="rounded my-4">
